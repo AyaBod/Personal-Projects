@@ -1,0 +1,35 @@
+import numpy as np # linear algebra
+import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+
+import os
+for dirname, _, filenames in os.walk('/kaggle/input'):
+    for filename in filenames:
+        print(os.path.join(dirname, filename))
+        
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error
+from sklearn.model_selection import train_test_split
+
+
+lappy_file_path = '../input/basic-computer-data-set/Computers.csv'
+computer_data = pd.read_csv(lappy_file_path)
+
+y = computer_data.price
+
+features = ['speed', 'hd', 'ram', 'screen', 'ads'] 
+
+X = computer_data[features]
+train_X, val_X, train_y, val_y = train_test_split(X, y, random_state = 1)
+
+rf_model = RandomForestRegressor(random_state = 1)
+rf_model.fit(train_X, train_y)
+rf_val_pred = rf_model.predict(val_X)
+rf_val_mae = mean_absolute_error(rf_val_pred, val_y)
+
+predictions = rf_model.predict(X)
+
+print(rf_val_pred)
+print("all data ->")
+print(rf_model.predict(X))
+
+print("validation mae for model: ", rf_val_mae)
