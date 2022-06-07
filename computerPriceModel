@@ -31,5 +31,5 @@ predictions = rf_model.predict(X)
 print(rf_val_pred)
 print("all data ->")
 print(rf_model.predict(X))
-
+ 
 print("validation mae for model: ", rf_val_mae)
